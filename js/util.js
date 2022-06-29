@@ -17,7 +17,7 @@ const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0,
 const makeGenerator = (count) => {
   const pull = Array.from({length: count}, (_, index) => index);
   return () =>
-    pull.splice(getRandomPositiveInteger(0, pull.length - 1), 1).shift();
+    pull.splice(getRandomPositiveInteger(1, pull.length - 1), 1).shift();
 };
 
 const getRandomArrayElements = (count, array) => {
