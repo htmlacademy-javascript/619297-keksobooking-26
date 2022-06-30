@@ -1,4 +1,11 @@
 import './data.js';
+const OFFER_TYPES = {
+  flat: 'Квартира',
+  house: 'Дом',
+  bungalow: 'Бунгало',
+  palace: 'Дворец',
+  hotel: 'Отель'
+};
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 
 const getCardElement = (card) => {
@@ -17,14 +24,7 @@ const getCardElement = (card) => {
   setContent('.popup__title',card.offer.title);
   setContent('.popup__text--address', card.offer.address ? `${card.offer.address}`: false);
   setContent('.popup__text--price',card.offer.price ? `${card.offer.price} ₽/ночь`: false);
-  const typesOffer = {
-    flat: 'Квартира',
-    house: 'Дом',
-    bungalow: 'Бунгало',
-    palace: 'Дворец',
-    hotel: 'Отель'
-  };
-  setContent('.popup__type', card.offer.type ? typesOffer[card.offer.type] : false);
+  setContent('.popup__type', card.offer.type ? OFFER_TYPES[card.offer.type] : false);
   setContent('.popup__text--capacity', card.offer.rooms ? `${card.offer.rooms} комнаты для ${card.offer.guests} гостей` : false);
   setContent('.popup__text--time', card.offer.checkin ? `Заезд после ${card.offer.checkin}, выезд до ${card.offer.checkout}` : false);
   const featuresList = cardOfferCopy.querySelectorAll('.popup__feature');
