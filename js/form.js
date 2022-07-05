@@ -21,17 +21,16 @@ const roomsCapacityOption = {
 const validateRoomsCapacity = () => roomsCapacityOption[adRooms.value].includes(adCapacity.value);
 
 const getRoomsCountErrorMessage = () => {
-  if (adRooms.value === '1') {
-    return '1 комната для 1 гостя' ;
-  }
-  if (adRooms.value === '2') {
-    return '2 комнаты для 2 гостей или 1 гостя';
-  }
-  if (adRooms.value === '3') {
-    return '3 комнаты для 3 гостей, 2 гостей или 1 гостя';
-  }
-  if (adRooms.value === '100') {
-    return 'Не для гостей';
+  switch (adRooms.value) {
+    case '1':
+      return '1 комната для 1 гостя' ;
+    case '2':
+      return '2 комнаты для 2 гостей или 1 гостя';
+    case '3':
+      return '3 комнаты для 3 гостей, 2 гостей или 1 гостя';
+    case '100':
+    default:
+      return 'Не для гостей';
   }
 };
 
@@ -65,7 +64,19 @@ typesRoom.forEach((item) => item.addEventListener('change', onTypeRoomChange));
 
 pristine.addValidator(priceRoom, getMatchingPrice, getPriceRoomErrorMessage);
 
+const timeIn = adForm.querySelector('#timein');
+const timeOut = adForm.querySelector('#timeout');
+
+timeIn.addEventListener('change', () => {
+  timeOut.value = timeIn.value;
+});
+
+timeOut.addEventListener('change', () => {
+  timeIn.value = timeOut.value;
+});
+
 adForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
+  if (!pristine.validate()) {
+    evt.preventDefault();
+  }
 });
