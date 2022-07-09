@@ -51,7 +51,7 @@ const LOCATION_DIGITS = 5;
 
 const COUNT_ITEMS_OF_OFFER = 10;
 
-const getAvatar = makeGenerator(10);
+const getAvatar = makeGenerator(11);
 
 const makeOffer = () => {
   const location = {
