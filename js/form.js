@@ -1,12 +1,9 @@
 const adForm = document.querySelector('.ad-form');
 
 const pristine = new Pristine(adForm, {
-  classTo: 'ad-form__element', // Элемент, на который будут добавляться классы
-  //errorClass: '', // Класс, обозначающий невалидное поле
-  //successClass: '', // Класс, обозначающий валидное поле
-  errorTextParent: 'ad-form__element', // Элемент, куда будет выводиться текст с ошибкой
-  //errorTextTag: '', // Тег, который будет обрамлять текст ошибки
-  errorTextClass: 'ad-form__error-text' // Класс для элемента с текстом ошибки
+  classTo: 'ad-form__element',
+  errorTextParent: 'ad-form__element',
+  errorTextClass: 'ad-form__error-text'
 },);
 
 const adRooms = adForm.querySelector('#room_number');
@@ -17,6 +14,20 @@ const roomsCapacityOption = {
   '3': ['3', '2', '1'],
   '100': ['0']
 };
+
+const priceRoom = adForm.querySelector('#price');
+const typeRoom = adForm.querySelector('#type');
+const typesRoom = adForm.querySelectorAll('#type');
+const minPriceRoom = {
+  bungalow: '0',
+  flat: '1000',
+  hotel: '3000',
+  house: '5000',
+  palace: '10000'
+};
+
+const timeIn = adForm.querySelector('#timein');
+const timeOut = adForm.querySelector('#timeout');
 
 const validateRoomsCapacity = () => roomsCapacityOption[adRooms.value].includes(adCapacity.value);
 
@@ -40,17 +51,6 @@ adCapacity.addEventListener('change', () => {
 
 pristine.addValidator(adRooms, validateRoomsCapacity, getRoomsCountErrorMessage);
 
-const priceRoom = adForm.querySelector('#price');
-const typeRoom = adForm.querySelector('#type');
-const typesRoom = adForm.querySelectorAll('#type');
-const minPriceRoom = {
-  bungalow: '0',
-  flat: '1000',
-  hotel: '3000',
-  house: '5000',
-  palace: '10000'
-};
-
 const getMatchingPrice = (value) => value.length && (parseInt(value, 10) >= minPriceRoom[typeRoom.value]);
 
 const getPriceRoomErrorMessage = () => `Минимальная цена ${minPriceRoom[typeRoom.value]}`;
@@ -63,9 +63,6 @@ function onTypeRoomChange () {
 typesRoom.forEach((item) => item.addEventListener('change', onTypeRoomChange));
 
 pristine.addValidator(priceRoom, getMatchingPrice, getPriceRoomErrorMessage);
-
-const timeIn = adForm.querySelector('#timein');
-const timeOut = adForm.querySelector('#timeout');
 
 timeIn.addEventListener('change', () => {
   timeOut.value = timeIn.value;
@@ -80,3 +77,4 @@ adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
   }
 });
+

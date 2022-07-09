@@ -1,3 +1,4 @@
+
 const sliderPriceElement = document.querySelector('.ad-form__slider');
 const inputPrice = document.querySelector('#price');
 const selectType = document.querySelectorAll('#type');
@@ -12,7 +13,7 @@ const minPriceRoom = {
 
 noUiSlider.create(sliderPriceElement, {
   range: {
-    min: 0,
+    min: 1000,
     max: 100000,
   },
   start: 1000,
@@ -29,16 +30,22 @@ noUiSlider.create(sliderPriceElement, {
 });
 
 function setValueSlider () {
-  sliderPriceElement.noUiSlider.set(minPriceRoom[this.value]);
+  sliderPriceElement.noUiSlider.updateOptions({
+    range: {
+      min: parseFloat(minPriceRoom[this.value]),
+      max: 100000,
+    },
+    start: parseFloat(minPriceRoom[this.value]),
+  });
 }
 
 selectType.forEach((item) => item.addEventListener('change', setValueSlider));
 
-
-sliderPriceElement.noUiSlider.on('update', () => {
-  inputPrice.value = sliderPriceElement.noUiSlider.get();
+sliderPriceElement.noUiSlider.on('slide', (evt) => {
+  inputPrice.value = evt.shift();
 });
 
-inputPrice.addEventListener('input', () => {
-  sliderPriceElement.noUiSlider.set(inputPrice.value);
+inputPrice.addEventListener('change', (evt) => {
+  sliderPriceElement.noUiSlider.set(evt.target.value);
 });
+
