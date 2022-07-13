@@ -1,4 +1,3 @@
-import './data.js';
 const OFFER_TYPES = {
   flat: 'Квартира',
   house: 'Дом',
@@ -30,11 +29,13 @@ const getCardElement = (card) => {
   const featuresList = cardOfferCopy.querySelectorAll('.popup__feature');
   featuresList.forEach((featureElement) => {
     let exist = false;
-    card.offer.features.forEach((feature) => {
-      if (featureElement.classList.contains(`popup__feature--${feature}`)) {
-        exist = true;
-      }
-    });
+    if (card.offer.features) {
+      card.offer.features.forEach((feature) => {
+        if (featureElement.classList.contains(`popup__feature--${feature}`)) {
+          exist = true;
+        }
+      });
+    }
     if (!exist) {
       featureElement.remove();
     }
@@ -43,10 +44,12 @@ const getCardElement = (card) => {
   const cardPhotos = cardOfferCopy.querySelector('.popup__photos');
   const cardPhoto = cardOfferCopy.querySelector('.popup__photo');
   const collectionPhoto = card.offer.photos;
-  for (let i = 0; i < collectionPhoto.length; i++) {
-    const cloneCardPhoto = cardPhoto.cloneNode(true);
-    cloneCardPhoto.src = collectionPhoto[i];
-    cardPhotos.append(cloneCardPhoto);
+  if (card.offer.photos) {
+    for (let i = 0; i < collectionPhoto.length; i++) {
+      const cloneCardPhoto = cardPhoto.cloneNode(true);
+      cloneCardPhoto.src = collectionPhoto[i];
+      cardPhotos.append(cloneCardPhoto);
+    }
   }
   cardPhoto.remove();
 

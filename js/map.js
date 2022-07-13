@@ -68,4 +68,10 @@ mainPinMarker.on('moveend', (evt) => {
   adressInput.value = `${dot.lat.toFixed(5)}, ${dot.lng.toFixed(5)}`;
 });
 
-export {initMap, createAdPinMarkers};
+const resetMap = () => {
+  map.closePopup();
+  const latlng = L.latLng(35.68622, 139.77074);
+  mainPinMarker.setLatLng(latlng);
+};
+
+export {initMap, createAdPinMarkers, resetMap};

@@ -1,3 +1,8 @@
+import { sendData } from './api.js';
+import { showErrorMessage } from './form-message.js';
+import { resetMap } from './map.js';
+import { resetSlider } from './slider.js';
+
 const adForm = document.querySelector('.ad-form');
 
 const pristine = new Pristine(adForm, {
@@ -15,6 +20,8 @@ const roomsCapacityOption = {
   '100': ['0']
 };
 
+const resetButton = document.querySelector('.ad-form__reset');
+const address = adForm.querySelector('#address');
 const priceRoom = adForm.querySelector('#price');
 const typeRoom = adForm.querySelector('#type');
 const typesRoom = adForm.querySelectorAll('#type');
@@ -28,6 +35,7 @@ const minPriceRoom = {
 
 const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
+const submitButton = adForm.querySelector('.ad-form__submit');
 
 const validateRoomsCapacity = () => roomsCapacityOption[adRooms.value].includes(adCapacity.value);
 
@@ -72,9 +80,53 @@ timeOut.addEventListener('change', () => {
   timeIn.value = timeOut.value;
 });
 
-adForm.addEventListener('submit', (evt) => {
-  if (!pristine.validate()) {
-    evt.preventDefault();
-  }
+const resetForm = () => {
+  priceRoom.placeholder = 1000;
+  address.placeholder = '35.68622, 139.77074';
+};
+
+resetButton.addEventListener('click', ()=> {
+  resetMap();
+  resetForm();
+  resetSlider();
 });
 
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Публикую...';
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
+
+const setUserFormSubmit = (onSuccess, onFailForm) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      sendData(
+        () => {
+          onSuccess();
+          unblockSubmitButton();
+          resetMap();
+          adForm.reset();
+          resetSlider();
+          resetForm();
+        },
+        () => {
+          showErrorMessage();
+          unblockSubmitButton();
+        },
+        new FormData(evt.target),
+      );
+    } else {
+      onFailForm();
+    }
+  });
+};
+
+export {setUserFormSubmit};
