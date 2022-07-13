@@ -30,12 +30,13 @@ noUiSlider.create(sliderPriceElement, {
 });
 
 function setValueSlider () {
+  const start = Math.max(parseFloat(minPriceRoom[this.value]), parseFloat(inputPrice.value));
   sliderPriceElement.noUiSlider.updateOptions({
     range: {
       min: parseFloat(minPriceRoom[this.value]),
       max: 100000,
     },
-    start: parseFloat(minPriceRoom[this.value]),
+    start: isNaN(start) ? parseFloat(minPriceRoom[this.value]) : start,
   });
 }
 
@@ -49,3 +50,8 @@ inputPrice.addEventListener('change', (evt) => {
   sliderPriceElement.noUiSlider.set(evt.target.value);
 });
 
+const resetSlider = () => {
+  sliderPriceElement.noUiSlider.set(1000);
+};
+
+export {resetSlider};
