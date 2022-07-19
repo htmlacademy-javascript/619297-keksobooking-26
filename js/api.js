@@ -1,10 +1,11 @@
 import { showAlert } from './util.js';
+import { hideFilter } from './action-filter.js';
 
 const getData = (onSuccess) => {
   fetch('https://26.javascript.pages.academy/keksobooking/data')
     .then((response) => {
       if (!response.ok) {
-        showAlert('Не удалось загрузить данные, попробуйте еще раз');
+        throw new Error('Не удалось загрузить данные, попробуйте еще раз');
       }
       return response;
     })
@@ -13,6 +14,7 @@ const getData = (onSuccess) => {
       onSuccess(offers);
     }).catch(() => {
       showAlert('Не удалось загрузить данные, попробуйте еще раз');
+      hideFilter();
     });
 };
 

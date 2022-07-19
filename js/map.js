@@ -52,6 +52,7 @@ const initMap = () => {
 };
 
 const createAdPinMarkers = (cards) => {
+  markerGroup.clearLayers();
   cards.forEach((card) => {
     const marker = L.marker(
       card.location,

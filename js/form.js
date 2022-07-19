@@ -1,4 +1,5 @@
 import { sendData } from './api.js';
+import { resetFilters } from './filter.js';
 import { showErrorMessage } from './form-message.js';
 import { resetMap } from './map.js';
 import { resetSlider } from './slider.js';
@@ -36,6 +37,7 @@ const minPriceRoom = {
 const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
 const submitButton = adForm.querySelector('.ad-form__submit');
+const timeFieldSet = adForm.querySelector('.ad-form__element--time');
 
 const validateRoomsCapacity = () => roomsCapacityOption[adRooms.value].includes(adCapacity.value);
 
@@ -72,23 +74,23 @@ typesRoom.forEach((item) => item.addEventListener('change', onTypeRoomChange));
 
 pristine.addValidator(priceRoom, getMatchingPrice, getPriceRoomErrorMessage);
 
-timeIn.addEventListener('change', () => {
-  timeOut.value = timeIn.value;
-});
-
-timeOut.addEventListener('change', () => {
-  timeIn.value = timeOut.value;
+timeFieldSet.addEventListener('change', (evt) => {
+  timeOut.value = evt.target.value;
+  timeIn.value = evt.target.value;
 });
 
 const resetForm = () => {
-  priceRoom.placeholder = 1000;
-  address.placeholder = '35.68622, 139.77074';
+  setTimeout(() => {
+    address.value = '35.68622, 139.77074';
+    priceRoom.value = 1000;
+  }, 0);
 };
 
 resetButton.addEventListener('click', ()=> {
   resetMap();
   resetForm();
   resetSlider();
+  resetFilters();
 });
 
 const blockSubmitButton = () => {
@@ -116,6 +118,7 @@ const setUserFormSubmit = (onSuccess, onFailForm) => {
           adForm.reset();
           resetSlider();
           resetForm();
+          resetFilters();
         },
         () => {
           showErrorMessage();

@@ -10,15 +10,14 @@ import { createAdPinMarkers } from './map.js';
 import { getData } from './api.js';
 import { setUserFormSubmit } from './form.js';
 import { showErrorMessage, showSuccessMessage } from './form-message.js';
-
-const SIMILAR_OFFERS = 10;
+import { updateFilters } from './filter.js';
 
 hideFilter();
 hideForm();
 initMap();
 
 getData((offers) => {
-  createAdPinMarkers(offers.slice(0, SIMILAR_OFFERS));
+  updateFilters(offers, createAdPinMarkers);
 });
 
 setUserFormSubmit(showSuccessMessage, showErrorMessage);
