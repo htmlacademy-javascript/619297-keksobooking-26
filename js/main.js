@@ -3,6 +3,7 @@ import './slider.js';
 import './form.js';
 import './map.js';
 import './form-message.js';
+import './photo.js';
 import { hideForm } from './action-form.js';
 import { hideFilter } from './action-filter.js';
 import { initMap } from './map.js';
