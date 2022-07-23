@@ -2,6 +2,11 @@ import { showForm } from './action-form.js';
 import { showFilter } from './action-filter.js';
 import { getCardElement } from './render-form.js';
 
+const START_POINT = {
+  lat: 35.68622,
+  lng: 139.77074,
+};
+const DEFAULT_ZOOM = 12;
 const map = L.map('map-canvas');
 const markerGroup = L.layerGroup().addTo(map);
 
@@ -18,10 +23,7 @@ const adPinIcon = L.icon({
 });
 
 const mainPinMarker = L.marker(
-  {
-    lat: 35.68622,
-    lng: 139.77074,
-  },
+  START_POINT,
   {
     draggable: true,
     icon: mainPinIcon,
@@ -34,10 +36,7 @@ const initMap = () => {
     showForm();
   });
 
-  map.setView({
-    lat: 35.68622,
-    lng: 139.77074,
-  }, 12);
+  map.setView(START_POINT, DEFAULT_ZOOM);
 
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -46,7 +45,7 @@ const initMap = () => {
     },
   ).addTo(map);
 
-  document.querySelector('#address').value = '35.68622, 139.77074';
+  document.querySelector('#address').value = `${START_POINT.lat}, ${START_POINT.lng}`;
 
   mainPinMarker.addTo(map);
 };
@@ -71,8 +70,8 @@ mainPinMarker.on('moveend', (evt) => {
 
 const resetMap = () => {
   map.closePopup();
-  const latlng = L.latLng(35.68622, 139.77074);
+  const latlng = L.latLng(START_POINT);
   mainPinMarker.setLatLng(latlng);
 };
 
-export {initMap, createAdPinMarkers, resetMap};
+export {initMap, createAdPinMarkers, resetMap, START_POINT};

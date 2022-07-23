@@ -1,9 +1,9 @@
 import {isEscapeKey} from './util.js';
 
-const succsessMessageTemplate = document.querySelector('#success').content.querySelector('.success');
-const successMessage = succsessMessageTemplate.cloneNode(true);
-const errorMessageTemlate = document.querySelector('#error').content.querySelector('.error');
-const errorMessage = errorMessageTemlate.cloneNode(true);
+const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
+const successMessage = successMessageTemplate.cloneNode(true);
+const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
+const errorMessage = errorMessageTemplate.cloneNode(true);
 const closeErrorMessageButton = errorMessage.querySelector('.error__button');
 
 

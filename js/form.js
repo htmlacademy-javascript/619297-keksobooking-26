@@ -4,6 +4,7 @@ import { showErrorMessage } from './form-message.js';
 import { resetMap } from './map.js';
 import { resetAvatar, resetPhoto } from './photo.js';
 import { resetSlider } from './slider.js';
+import { START_POINT } from './map.js';
 
 const adForm = document.querySelector('.ad-form');
 
@@ -82,7 +83,7 @@ timeFieldSet.addEventListener('change', (evt) => {
 
 const resetForm = () => {
   setTimeout(() => {
-    address.value = '35.68622, 139.77074';
+    address.value = `${START_POINT.lat}, ${START_POINT.lng}`;
     priceRoom.value = 1000;
   }, 0);
 };
