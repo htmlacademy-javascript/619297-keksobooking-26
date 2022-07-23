@@ -2,6 +2,7 @@ import { sendData } from './api.js';
 import { resetFilters } from './filter.js';
 import { showErrorMessage } from './form-message.js';
 import { resetMap } from './map.js';
+import { resetAvatar, resetPhoto } from './photo.js';
 import { resetSlider } from './slider.js';
 
 const adForm = document.querySelector('.ad-form');
@@ -91,6 +92,8 @@ resetButton.addEventListener('click', ()=> {
   resetForm();
   resetSlider();
   resetFilters();
+  resetAvatar();
+  resetPhoto();
 });
 
 const blockSubmitButton = () => {
@@ -119,6 +122,8 @@ const setUserFormSubmit = (onSuccess, onFailForm) => {
           resetSlider();
           resetForm();
           resetFilters();
+          resetAvatar();
+          resetPhoto();
         },
         () => {
           showErrorMessage();

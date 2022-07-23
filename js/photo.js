@@ -17,18 +17,36 @@ avatarChooser.addEventListener('change', () => {
 });
 
 photoChooser.addEventListener('change', () => {
-  const photoPreview = document.createElement('img');
-  photoPreview.style.width = '80px';
-  photoPreview.style.height = '80px';
-  photoPreviewContainer.append(photoPreview);
-
   const photo = photoChooser.files[0];
   const photoName = photo.name.toLowerCase();
-
   const matches = FILE_TYPES.some((it) => photoName.endsWith(it));
 
   if (matches) {
-    photoPreview.src = URL.createObjectURL(photo);
+    let imgElement = photoPreviewContainer.querySelector('img');
+    if (!imgElement) {
+      imgElement = document.createElement('img');
+      imgElement.style.width = '100%';
+      imgElement.style.height = '100%';
+      imgElement.style.objectFit = 'contain';
+
+      photoPreviewContainer.append(imgElement);
+    }
+    imgElement.src = URL.createObjectURL(photo);
   }
 
 });
+
+const resetAvatar = () => {
+  avatarPreview.src = './img/muffin-grey.svg';
+};
+
+const resetPhoto = () => {
+  const imgElement = photoPreviewContainer.querySelector('img');
+  if (imgElement) {
+    imgElement.remove();
+  }
+};
+
+export {resetAvatar, resetPhoto};
+
+

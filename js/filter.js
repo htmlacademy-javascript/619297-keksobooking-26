@@ -7,7 +7,7 @@ const housingRooms = filterForm.querySelector('#housing-rooms');
 const housingGuests = filterForm.querySelector('#housing-guests');
 const housingFeatures = filterForm.querySelectorAll('.map__checkbox');
 const SIMILAR_OFFERS = 10;
-const price = {
+const Price = {
   MIDDLE: 10000,
   HIGH: 50000,
 };
@@ -27,13 +27,13 @@ const applyHousingPrice = (offer) => {
     return true;
   }
   if (housingPrice.value === 'middle') {
-    return offer.offer.price < price.HIGH && offer.offer.price >= price.MIDDLE;
+    return offer.offer.price < Price.HIGH && offer.offer.price >= Price.MIDDLE;
   }
   if (housingPrice.value === 'low') {
-    return offer.offer.price < price.MIDDLE;
+    return offer.offer.price < Price.MIDDLE;
   }
   if (housingPrice.value === 'high') {
-    return offer.offer.price > price.HIGH;
+    return offer.offer.price > Price.HIGH;
   }
 };
 
