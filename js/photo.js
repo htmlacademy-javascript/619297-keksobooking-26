@@ -30,9 +30,23 @@ photoChooser.addEventListener('change', () => {
       imgElement.style.objectFit = 'contain';
 
       photoPreviewContainer.append(imgElement);
-      imgElement.src = URL.createObjectURL(photo);
     }
     imgElement.src = URL.createObjectURL(photo);
   }
 
 });
+
+const resetAvatar = () => {
+  avatarPreview.src = './img/muffin-grey.svg';
+};
+
+const resetPhoto = () => {
+  const imgElement = photoPreviewContainer.querySelector('img');
+  if (imgElement) {
+    imgElement.remove();
+  }
+};
+
+export {resetAvatar, resetPhoto};
+
+
