@@ -14,8 +14,8 @@ const pristine = new Pristine(adForm, {
   errorTextClass: 'ad-form__error-text'
 },);
 
-const adRooms = adForm.querySelector('#room_number');
-const adCapacity = adForm.querySelector('#capacity');
+const adRoomsSelect = adForm.querySelector('#room_number');
+const adCapacitySelect = adForm.querySelector('#capacity');
 const roomsCapacityOption = {
   '1': ['1'],
   '2': ['2', '1'],
@@ -24,10 +24,10 @@ const roomsCapacityOption = {
 };
 
 const resetButton = document.querySelector('.ad-form__reset');
-const address = adForm.querySelector('#address');
-const priceRoom = adForm.querySelector('#price');
-const typeRoom = adForm.querySelector('#type');
-const typesRoom = adForm.querySelectorAll('#type');
+const addressInput = adForm.querySelector('#address');
+const priceRoomInput = adForm.querySelector('#price');
+const typeRoomSelect = adForm.querySelector('#type');
+const typesRoomSelect = adForm.querySelectorAll('#type');
 const minPriceRoom = {
   bungalow: '0',
   flat: '1000',
@@ -36,15 +36,15 @@ const minPriceRoom = {
   palace: '10000'
 };
 
-const timeIn = adForm.querySelector('#timein');
-const timeOut = adForm.querySelector('#timeout');
+const timeInSelect = adForm.querySelector('#timein');
+const timeOutSelect = adForm.querySelector('#timeout');
 const submitButton = adForm.querySelector('.ad-form__submit');
 const timeFieldSet = adForm.querySelector('.ad-form__element--time');
 
-const validateRoomsCapacity = () => roomsCapacityOption[adRooms.value].includes(adCapacity.value);
+const validateRoomsCapacity = () => roomsCapacityOption[adRoomsSelect.value].includes(adCapacitySelect.value);
 
 const getRoomsCountErrorMessage = () => {
-  switch (adRooms.value) {
+  switch (adRoomsSelect.value) {
     case '1':
       return '1 комната для 1 гостя' ;
     case '2':
@@ -57,34 +57,34 @@ const getRoomsCountErrorMessage = () => {
   }
 };
 
-adCapacity.addEventListener('change', () => {
-  pristine.validate(adRooms);
+adCapacitySelect.addEventListener('change', () => {
+  pristine.validate(adRoomsSelect);
 });
 
-pristine.addValidator(adRooms, validateRoomsCapacity, getRoomsCountErrorMessage);
+pristine.addValidator(adRoomsSelect, validateRoomsCapacity, getRoomsCountErrorMessage);
 
-const getMatchingPrice = (value) => value.length && (parseInt(value, 10) >= minPriceRoom[typeRoom.value]);
+const getMatchingPrice = (value) => value.length && (parseInt(value, 10) >= minPriceRoom[typeRoomSelect.value]);
 
-const getPriceRoomErrorMessage = () => `Минимальная цена ${minPriceRoom[typeRoom.value]}`;
+const getPriceRoomErrorMessage = () => `Минимальная цена ${minPriceRoom[typeRoomSelect.value]}`;
 
-function onTypeRoomChange () {
-  priceRoom.placeholder = minPriceRoom[this.value];
-  pristine.validate(priceRoom);
+function onTypeRoomSelectChange () {
+  priceRoomInput.placeholder = minPriceRoom[this.value];
+  pristine.validate(priceRoomInput);
 }
 
-typesRoom.forEach((item) => item.addEventListener('change', onTypeRoomChange));
+typesRoomSelect.forEach((item) => item.addEventListener('change', onTypeRoomSelectChange));
 
-pristine.addValidator(priceRoom, getMatchingPrice, getPriceRoomErrorMessage);
+pristine.addValidator(priceRoomInput, getMatchingPrice, getPriceRoomErrorMessage);
 
 timeFieldSet.addEventListener('change', (evt) => {
-  timeOut.value = evt.target.value;
-  timeIn.value = evt.target.value;
+  timeOutSelect.value = evt.target.value;
+  timeInSelect.value = evt.target.value;
 });
 
 const resetForm = () => {
   setTimeout(() => {
-    address.value = `${START_POINT.lat}, ${START_POINT.lng}`;
-    priceRoom.value = 1000;
+    addressInput.value = `${START_POINT.lat}, ${START_POINT.lng}`;
+    priceRoomInput.value = 1000;
   }, 0);
 };
 

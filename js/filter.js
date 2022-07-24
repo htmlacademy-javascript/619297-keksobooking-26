@@ -1,11 +1,11 @@
 import { debounce } from './util.js';
 
 const filterForm = document.querySelector('.map__filters');
-const housingType = filterForm.querySelector('#housing-type');
-const housingPrice = filterForm.querySelector('#housing-price');
-const housingRooms = filterForm.querySelector('#housing-rooms');
-const housingGuests = filterForm.querySelector('#housing-guests');
-const housingFeatures = filterForm.querySelectorAll('.map__checkbox');
+const housingTypeSelect = filterForm.querySelector('#housing-type');
+const housingPriceSelect = filterForm.querySelector('#housing-price');
+const housingRoomsSelect = filterForm.querySelector('#housing-rooms');
+const housingGuestsSelect = filterForm.querySelector('#housing-guests');
+const housingFeaturesCheckbox = filterForm.querySelectorAll('.map__checkbox');
 const SIMILAR_OFFERS = 10;
 const Price = {
   MIDDLE: 10000,
@@ -14,45 +14,43 @@ const Price = {
 const RERENDER_DELAY = 500;
 
 const applyHousingType = (offer) => {
-  const filterValue = housingType.value;
-  const typeValue = offer.offer.type;
-  if (filterValue === 'any') {
+  if (housingTypeSelect.value === 'any') {
     return true;
   }
-  return filterValue === typeValue;
+  return housingTypeSelect.value === offer.offer.type;
 };
 
 const applyHousingPrice = (offer) => {
-  if (housingPrice.value === 'any') {
+  if (housingPriceSelect.value === 'any') {
     return true;
   }
-  if (housingPrice.value === 'middle') {
+  if (housingPriceSelect.value === 'middle') {
     return offer.offer.price < Price.HIGH && offer.offer.price >= Price.MIDDLE;
   }
-  if (housingPrice.value === 'low') {
+  if (housingPriceSelect.value === 'low') {
     return offer.offer.price < Price.MIDDLE;
   }
-  if (housingPrice.value === 'high') {
+  if (housingPriceSelect.value === 'high') {
     return offer.offer.price > Price.HIGH;
   }
 };
 
 const applyHousingRooms = (offer) => {
-  if (housingRooms.value === 'any') {
+  if (housingRoomsSelect.value === 'any') {
     return true;
   }
-  return housingRooms.value === String(offer.offer.rooms);
+  return housingRoomsSelect.value === String(offer.offer.rooms);
 };
 
 const applyHousingGuests = (offer) => {
-  if (housingGuests.value === 'any') {
+  if (housingGuestsSelect.value === 'any') {
     return true;
   }
-  return housingGuests.value === String(offer.offer.guests);
+  return housingGuestsSelect.value === String(offer.offer.guests);
 };
 
 const applyHousingFeatures = (offer) => {
-  const checkedFeatures = Array.from(housingFeatures)
+  const checkedFeatures = Array.from(housingFeaturesCheckbox)
     .filter((housingFeature) => housingFeature.checked)
     .map((housingFeature) => housingFeature.value);
   if (!checkedFeatures.length) {
