@@ -1,6 +1,6 @@
 const inputForm = document.querySelectorAll('.ad-form__element');
 const adForm = document.querySelector('.ad-form');
-const adFormHeader = document.querySelector('.ad-form-header')
+const adFormHeader = document.querySelector('.ad-form-header');
 
 const hideForm = () => {
   adForm.classList.add('ad-form--disabled');
