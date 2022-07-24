@@ -1,7 +1,7 @@
 
 const sliderPriceElement = document.querySelector('.ad-form__slider');
-const inputPrice = document.querySelector('#price');
-const selectType = document.querySelectorAll('#type');
+const priceInput = document.querySelector('#price');
+const typeSelect = document.querySelectorAll('#type');
 const minPriceRoom = {
   bungalow: '0',
   flat: '1000',
@@ -30,7 +30,7 @@ noUiSlider.create(sliderPriceElement, {
 });
 
 function setValueSlider () {
-  const start = Math.max(parseFloat(minPriceRoom[this.value]), parseFloat(inputPrice.value));
+  const start = Math.max(parseFloat(minPriceRoom[this.value]), parseFloat(priceInput.value));
   sliderPriceElement.noUiSlider.updateOptions({
     range: {
       min: parseFloat(minPriceRoom[this.value]),
@@ -40,13 +40,13 @@ function setValueSlider () {
   });
 }
 
-selectType.forEach((item) => item.addEventListener('change', setValueSlider));
+typeSelect.forEach((item) => item.addEventListener('change', setValueSlider));
 
 sliderPriceElement.noUiSlider.on('slide', (evt) => {
-  inputPrice.value = evt.shift();
+  priceInput.value = evt.shift();
 });
 
-inputPrice.addEventListener('change', (evt) => {
+priceInput.addEventListener('change', (evt) => {
   sliderPriceElement.noUiSlider.set(evt.target.value);
 });
 
